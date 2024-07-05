@@ -96,7 +96,7 @@ def parse_opt():
                         help='deepocsort, botsort, strongsort, ocsort, bytetrack')
     parser.add_argument('--source', type=str, default='0',
                         help='file/dir/URL/glob, 0 for webcam')
-    parser.add_argument('--project', default=ROOT / 'runs' / 'mot',
+    parser.add_argument('--project', default=ROOT / 'runs' / 'mot', type=Path,
                         help='save results to project/name')
     parser.add_argument('--name', default='mot',
                         help='save results to project/name')

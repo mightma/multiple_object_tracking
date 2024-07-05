@@ -99,6 +99,14 @@ def run(args):
     yolo.predictor.custom_args = args
 
     for r in results:
+        # Remove small boxes
+        if args.wh_thr is not None:
+            boxes = []
+            for box in r.boxes:
+                w, h = box.xywh[0][2:4]
+                if w > args.wh_thr and h > args.wh_thr:
+                    boxes.append(box)
+            r.boxes = boxes
 
         img = yolo.predictor.trackers[0].plot_results(r.orig_img, args.show_trajectories)
 
@@ -125,6 +133,8 @@ def parse_opt():
                         help='confidence threshold')
     parser.add_argument('--iou', type=float, default=0.7,
                         help='intersection over union (IoU) threshold for NMS')
+    parser.add_argument('--wh_thr', type=float, default=None,
+                        help='filter out boxes with width and height smaller than this threshold')
     parser.add_argument('--device', default='',
                         help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--show', action='store_true',
