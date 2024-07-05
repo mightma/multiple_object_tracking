@@ -1,0 +1,7 @@
+**/.ipynb_checkpoints/
+
+# Inference (detection or tracking) results
+outputs/
+
+# Training logs
+train.log
